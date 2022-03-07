@@ -5,23 +5,22 @@ import { useEffect, useState } from "react";
 import GameRules from "./GamesRules";
 import QuestionForm from "./QuestionForm";
 
-
 const cloneArray = (list) => {
   return list.map((object) => ({ ...object }));
 };
-
 
 const AdminPage = () => {
   const [create, setCreate] = useState(false);
   const [questions, setQuestions] = useState(cloneArray(data));
   const [editableQuestion, setEditableQuestion] = useState(null);
-  const [errorCreate , setErrorCreate] = useState('');
-
+  const [errorCreate, setErrorCreate] = useState({ title: null, answer: null , choices : []});
 
   const onEdit = (question) => {
     setQuestions((previousQuestions) => {
       const newQuestions = cloneArray(previousQuestions);
-      const index = previousQuestions.findIndex((question) => question.id === editableQuestion.id);
+      const index = previousQuestions.findIndex(
+        (question) => question.id === editableQuestion.id
+      );
       newQuestions[index] = question;
       return newQuestions;
     });
@@ -34,27 +33,37 @@ const AdminPage = () => {
     });
   };
 
-
-  const onSubmit = (question) => {
-    if (!question.title){
-      setErrorCreate('Please fill the title !!');
-      return
-    } else if(  question.choices.length < 2 ) {
-      setErrorCreate("Add at least 2 options");
-      return
-    }else if(question.choices.title === ''  || question.choices.key === ''){
-      setErrorCreate('Choices must have values');
-      return ;
-    } else if( !question.answer) {
-      setErrorCreate('Please fill the answer');
-      return
-    } else {
-      setErrorCreate(false);
-    }
-    return editableQuestion ? onEdit(question) : onCreate(question);
-
+  const checkChoices = (choices) => {
+    let foundError = false;
+    choices.forEach((choice) => {
+      if (choice.title === "" || choice.key === "") {
+        foundError = true;
+      }
+    });
+    return foundError;
   };
 
+  const onSubmit = (question) => {
+    if (!question.title) {
+      setErrorCreate({ ...errorCreate, title: "Please fill the namee c!" });
+      return;
+    } else if (question.choices.length < 2) {
+      setErrorCreate({ ...errorCreate, choices: "At least 2 options c!" });
+      return;
+    } else if (checkChoices(question.choices)) {
+      setErrorCreate({ ...errorCreate, choices: "Fill the options c!" });
+      return;
+    } else if (!question.answer) {
+      setErrorCreate({ ...errorCreate, answer: "Please fill the answer c!!" });
+      return;
+    } else {
+      setErrorCreate({
+        title: null,
+        answer: null,
+      });
+    }
+    return editableQuestion ? onEdit(question) : onCreate(question);
+  };
 
   const onCancel = () => {
     if (editableQuestion) setEditableQuestion(null);
@@ -73,7 +82,7 @@ const AdminPage = () => {
   const onQuestionEdit = (record) => {
     if (create) setCreate(false);
     setEditableQuestion(record);
- if(editableQuestion) setEditableQuestion(null)
+    if (editableQuestion) setEditableQuestion(null);
   };
 
   useEffect(() => {
@@ -108,7 +117,6 @@ const AdminPage = () => {
               onSubmit={onSubmit}
               onCancel={onCancel}
               create={create}
-              setEditableQuestion={setEditableQuestion}
               currentQuestion={editableQuestion}
             />
           )}

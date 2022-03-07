@@ -4,8 +4,14 @@ import { FormOutlined } from "@ant-design/icons";
 import Choices from "./Choices";
 import "../styles/AddQuestionForm.css";
 
-const QuestionForm = ({ errorCreate, onSubmit, onCancel, currentQuestion , create, setEditableQuestion }) => {
-
+const QuestionForm = ({
+  errorCreate,
+  onSubmit,
+  onCancel,
+  currentQuestion,
+  create,
+  setEditableQuestion,
+}) => {
   const [question, setQuestion] = useState(() => {
     const initialState = { title: "", answer: "", choices: [], id: 0 };
 
@@ -19,32 +25,35 @@ const QuestionForm = ({ errorCreate, onSubmit, onCancel, currentQuestion , creat
     return initialState;
   });
 
-const [errorEditing , setErrorEditing] = useState('');
-const [error, setError] = useState('');
+  const [errorEditing, setErrorEditing] = useState({
+    title: null,
+    answer: null,
+    choices : []
+  });
+  console.log(errorEditing);
 
   const onAnswerChange = (key) => {
     setQuestion({
       ...question,
       answer: key,
     });
-    setErrorEditing('')
   };
 
   React.useEffect(() => {
-    const answerChoice = question.choices.find(choice => choice.key === question.answer);
+    const answerChoice = question.choices.find(
+      (choice) => choice.key === question.answer
+    );
 
-   if(!answerChoice){
+    if (!answerChoice) {
       onAnswerChange(null);
-      setErrorEditing('Select an answer !!');
     }
-
-  },[question.choices]);
-
+  }, [question.choices]);
 
   const onChoiceDelete = (choice) => {
     setQuestion((question) => {
       const filterChoices = question.choices.filter(
-        (x) => x.key !== choice.key);
+        (x) => x.key !== choice.key
+      );
       return {
         ...question,
         choices: filterChoices,
@@ -80,8 +89,7 @@ const [error, setError] = useState('');
 
   const onChoiceChange = (attr, value, index) => {
     setQuestion((previousQuestion) => {
-
-      const newChoices = [ ...previousQuestion.choices ];
+      const newChoices = [...previousQuestion.choices];
 
       const currentChoice = newChoices[index];
 
@@ -94,15 +102,35 @@ const [error, setError] = useState('');
     });
   };
 
+  const checkChoices = (choices) => {
+    let foundError = false;
+    choices.forEach((choice) => {
+      if (choice.title === "" || choice.key === "") {
+        foundError = true;
+      }
+    });
+    return foundError;
+  };
+
+
   const handleSave = () => {
     onSubmit(question);
-    if(errorEditing !== '') return;
-    if(question.title === '') {
-      setError('Please fill the name !!');
+    if (question.title === "") {
+      setErrorEditing({ ...errorEditing, title: "Please fill the title !" });
       return;
-    }else setError('');
+    }else if (question.answer === null){
+      setErrorEditing({ ...errorEditing, answer: "Select an answer !" });
+      return
+    }else if (question.choices.length < 2){
+      setErrorEditing({ ...errorEditing, choices: "At least 2 options !" });
+      return
+    }else if (checkChoices(question.choices)) {
+      setErrorEditing({ ...errorEditing, choices: "Fill the options" });
+      return;
+    } 
+    else setErrorEditing({ title: null, answer: null });
     setEditableQuestion(null);
-    setQuestion({ title: "", answer: "", choices: [], id: 0 })
+    setQuestion({ title: "", answer: "", choices: [], id: 0 });
   };
 
   const { Option } = Select;
@@ -123,9 +151,6 @@ const [error, setError] = useState('');
             addonBefore={<FormOutlined />}
             style={{ width: 500 }}
           />
-          <p style={{ color: "red", paddingTop: "10px", marginRight: "20px" }}>
-            {error}
-          </p>
           <label>Correct Answer</label>
 
           <Select
@@ -147,9 +172,9 @@ const [error, setError] = useState('');
               );
             })}
           </Select>
-          <p style={{ color: "red", paddingTop: "10px", marginRight: "20px" }}>
-            {errorEditing}
-          </p>
+          <p
+            style={{ color: "red", paddingTop: "10px", marginRight: "20px" }}
+          ></p>
           <Choices
             list={question.choices}
             createChoice={createChoice}
@@ -160,7 +185,12 @@ const [error, setError] = useState('');
       </form>
       <div className="new-input-buttons">
         <p style={{ color: "red", paddingTop: "10px", marginRight: "20px" }}>
-        {errorCreate}
+          {errorCreate?.title}
+          {errorCreate?.answer}
+          {errorCreate?.choices}
+          {errorEditing?.answer}
+          {errorEditing?.title}
+          {errorEditing?.choices}
         </p>
         <Button shape="round" type="primary" onClick={handleSave}>
           SAVE
