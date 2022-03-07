@@ -42,8 +42,8 @@ const GameRules = () => {
       timeout: levelsData.timeout,
       slices: levelsData.slices,
       wrongAnswers: levelsData.wrongAnswers,
-    }(
-      Object.keys(levelsData).map((x) => {
+    }
+    (Object.keys(levelsData).map((x) => {
         if (x === level) {
           setLevelsData({ ...levelsData, [x]: { newlevel } });
         }

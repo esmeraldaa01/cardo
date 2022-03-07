@@ -5,7 +5,7 @@ import {Button} from "antd";
 const QuestionsTable = ({ questions , onDelete, onEdit, onCreate}) => {
     return (
         <div className="table-container">
-            <p className="header">Quiz Questions CRUD</p>
+            <p className="header-admin">Quiz Questions CRUD</p>
             <table className="table-form">
                 <thead className="table-header">
                 <tr>

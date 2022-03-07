@@ -2,7 +2,7 @@
     width: 800px;
     height: 524px;
     color: white;
-    background-color: rgba(#010131,#010131,#010131, 0.85);
+    background-color: rgba(2, 2, 63, 0.3);
     position: absolute;
     left: 50%;
     top: 50%;
@@ -14,12 +14,12 @@
     flex-direction: column;
     justify-content: space-between;
   }
-  .container {
+  .contain {
     display: flex;
     flex-direction: row;
   }
   .general {
-    background-color: rgba(#010131, 0.85);
+    background-color: rgba(2, 2, 63, 0.45);
     flex-direction: column;
     margin: 0 10px;
     padding-bottom: 80px;
@@ -30,18 +30,18 @@
     text-align: center;
     margin: 0 10px;
     border-radius: 5px;
-    background-color: rgba(#010131, 0.2);
+    background-color: rgba(2, 2, 63, 0.6);
     font-weight: bold;
     font-size: 15px;
     font-family: Arial, Helvetica, sans-serif;
   }
   
   .level {
-    background-color: rgba(#010131, 0.25);
+    background-color: rgba(2, 2, 63, 0.6);
     flex-direction: column;
     margin: 0 10px;
     padding-bottom: 80px;
-    height: 250px;
+    height: 300px;
     display: flex;
     flex: 1;
   }
@@ -53,11 +53,11 @@
     font-family: Arial, Helvetica, sans-serif;
   }
   .score {
-    background-color: rgba(#010131,#010131,#010131, 0.25);
+    background-color: rgba(2, 2, 63, 0.6);
   flex-direction: column;
   margin: 0 10px;
   padding-bottom: 80px;
-    height: 250px;
+    height: 300px;
     flex: 1;
   }
   .style {
@@ -67,7 +67,7 @@
   .btn {
     border: none;
     color: aliceblue;
-    background-color: rgba(#010131,#010131,#010131, 0.25);
+    background-color: rgba(2, 2, 63, 0.6);
     padding: 15px 11px;
     margin: 10px 15px;
     text-align: left;
@@ -78,22 +78,24 @@
   .clicked {
     border: none;
     color: aliceblue;
-    background-color: rgba(#010113, 0.8);
+    padding: 15px 11px;
+    margin: 10px 15px;
+    text-align: left;
+    background-color: rgba(1, 1, 30, 0.6);
   }
   .scores {
     border: none;
     color: aliceblue;
-    background-color: rgba(#000023, 0.3);
+    background-color: rgba(2, 2, 63, 0.6);
     padding: 15px;
     margin: 5px 15px;
     text-align: left;
-    overflow: hidden;
-    overflow-x: scroll;
+
   }
   .play {
     border: none;
     color: aliceblue;
-    background-color: rgba(#000023, 0.3);
+    background-color: rgba(2, 2, 63, 0.7);
     padding: 8px;
     margin: 69px 10px 10px 10px;
     text-transform: uppercase;
@@ -102,5 +104,5 @@
     font-weight: bolder;
   }
   .play:active {
-    background-color: rgba(#010113, 0.5);
+    background-color: rgba(2, 2, 63, 0.7);
   }

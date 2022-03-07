@@ -27,18 +27,12 @@ const Game = () => {
       <div className="game-container">
         <p className="description">Memory Game</p>
         <br />
-        <div className="container">
+        <div className="contain">
           <div className="level">
             <p className="title">Level</p>
 
             <button
-              className={
-                level === "easy"
-                  ? "clicked"
-                  : "btn" || easyDefault
-                  ? "clicked"
-                  : "btn"
-              }
+              className={ level || easyDefault === "easy" ? "clicked" : "btn" }
               onClick={() => setLevel("easy")}
             >
               Easy

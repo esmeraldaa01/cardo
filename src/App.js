@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import VideoTemplate from "./assests/border_template.mp4";
-import VideoTemplate2 from "./assests/digital_template.mp4";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import LoginPage from "./components/LoginPage/LoginPage";
 import AdminPage from "./components/AdminPage/pages/AdminPage";

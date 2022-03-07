@@ -98,3 +98,7 @@ const Quiz = () => {
         </div>
       </div>
     </div>
+    </Layout> )
+}
+
+export default Quiz;

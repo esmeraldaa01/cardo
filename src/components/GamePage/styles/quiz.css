@@ -7,12 +7,12 @@
     transform: translate(-50%, -50%);
   display: flex;
   color: aliceblue;
-  background-color: rgba(#040145, 0.2);
+    background-color: rgba(2, 2, 63, 0.3);
 }
 .quiz {
   flex: 1;
   text-align: center;
-  background-color: rgba(#01014d, 0.2);
+    background-color: rgba(2, 2, 63, 0.6);
   height: fit-content;
 }
 .question {
@@ -38,7 +38,7 @@ quiz-btn {
     margin: 5px;
     padding: 10px;
     cursor: pointer;
-  background-color: rgba(#01012f, 0.3);
+    background-color: rgba(2, 2, 63, 0.6);
 }
 .answer-btn:active {
     background-color: #010128;

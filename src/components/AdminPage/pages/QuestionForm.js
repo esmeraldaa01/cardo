@@ -3,13 +3,9 @@ import { Input, Button, Space, Select } from "antd";
 import { FormOutlined } from "@ant-design/icons";
 import Choices from "./Choices";
 import "../styles/AddQuestionForm.css";
-import choices from "./Choices";
-
-const cloneArray = (arr) => {
-  return JSON.parse(JSON.stringify(arr));
-};
 
 const QuestionForm = ({ error, onSubmit, onCancel, currentQuestion }) => {
+
   const [question, setQuestion] = useState(() => {
     const initialState = { title: "", answer: "", choices: [], id: 0 };
 
@@ -22,6 +18,23 @@ const QuestionForm = ({ error, onSubmit, onCancel, currentQuestion }) => {
 
     return initialState;
   });
+
+  const onAnswerChange = (key) => {
+    setQuestion({
+      ...question,
+      answer: key
+    });
+  };
+
+  React.useEffect(()=>{
+    const answerChoice = question.choices.find(choice => choice.key === question.answer);
+
+    if(!answerChoice)
+     onAnswerChange(null)
+
+  },[question.choices]);
+
+
   const onChoiceDelete = (choice) => {
     setQuestion((question) => {
       const filterChoices = question.choices.filter(
@@ -60,20 +73,16 @@ const QuestionForm = ({ error, onSubmit, onCancel, currentQuestion }) => {
     });
   };
 
-  const onChoiceChange = (attr, value, index, key) => {
-    //kte
+  const onChoiceChange = (attr, value, index) => {
     setQuestion((previousQuestion) => {
-      const newChoices = [...previousQuestion.choices];
 
-      const existingChoice = newChoices.find((x) => x.key === key);
-      const newChoice = {
-        ...existingChoice,
-        title: value, //kte ?, te gjithe metoden,
-      };
+      const newChoices = [
+          ...previousQuestion.choices
+      ];
 
-      //ktu e beje gabim sepse ndryshoje vleren e correct answer kur sduhet, ndrysho vtm title? asgje tjt si posht
+      const currentChoice = newChoices[index];
 
-      newChoices.splice(index, 1, newChoice);
+      currentChoice[attr] = value;
 
       return {
         ...previousQuestion,
@@ -88,15 +97,7 @@ const QuestionForm = ({ error, onSubmit, onCancel, currentQuestion }) => {
 
   const { Option } = Select;
 
-  const onChange = (key) => {
-    debugger;
-    setQuestion({
-      ...question,
-      answer: key,
-    });
-  };
 
-  console.log("------", question);
 
   return (
     <div className="form-container">
@@ -119,8 +120,8 @@ const QuestionForm = ({ error, onSubmit, onCancel, currentQuestion }) => {
           <Select
             showSearch
             placeholder="Select the correct answer"
-            onChange={onChange}
             value={question.answer}
+            onChange={onAnswerChange}
             optionFilterProp="children"
             filterOption={(input, option) =>
               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
