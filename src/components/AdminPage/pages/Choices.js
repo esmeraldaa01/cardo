@@ -14,7 +14,7 @@ const Choices = ({list, handleDelete, createChoice, onChoiceChange}) => {
                                 <Input
                                     name="title"
                                         value={choice.title}
-                                    onChange={(event) => {
+                                        onChange={(event) => {
                                         onChoiceChange(
                                             "title",
                                             event.target.value,

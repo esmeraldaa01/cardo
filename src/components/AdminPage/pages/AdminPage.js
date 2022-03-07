@@ -5,25 +5,23 @@ import { useEffect, useState } from "react";
 import GameRules from "./GamesRules";
 import QuestionForm from "./QuestionForm";
 
-//funksion qe na ndihmon per te kthyer nje array me objekte , kopjon json data
+
 const cloneArray = (list) => {
   return list.map((object) => ({ ...object }));
 };
 
 
 const AdminPage = () => {
-  const [create, setCreate] = useState(false); //nese state i create behet true ,ben te mundur hapjen e formes create question
+  const [create, setCreate] = useState(false);
   const [questions, setQuestions] = useState(cloneArray(data));
-  // const [questions, setQuestions] = useState([]);
-  const [editableQuestion, setEditableQuestion] = useState(null); //nese state i editableQuestion ka vlere ,ben te mundur hapjen e formes
-  const [error, setError] = useState(false);
+  const [editableQuestion, setEditableQuestion] = useState(null);
+  const [errorCreate , setErrorCreate] = useState('');
+
 
   const onEdit = (question) => {
     setQuestions((previousQuestions) => {
       const newQuestions = cloneArray(previousQuestions);
-      const index = previousQuestions.findIndex(
-        (question) => question.id === editableQuestion.id
-      );
+      const index = previousQuestions.findIndex((question) => question.id === editableQuestion.id);
       newQuestions[index] = question;
       return newQuestions;
     });
@@ -36,13 +34,27 @@ const AdminPage = () => {
     });
   };
 
+
   const onSubmit = (question) => {
-    if (!question.title && !question.answer) {
-      setError(true);
-      return;
+    if (!question.title){
+      setErrorCreate('Please fill the title !!');
+      return
+    } else if(  question.choices.length < 2 ) {
+      setErrorCreate("Add at least 2 options");
+      return
+    }else if(question.choices.title === ''  || question.choices.key === ''){
+      setErrorCreate('Choices must have values');
+      return ;
+    } else if( !question.answer) {
+      setErrorCreate('Please fill the answer');
+      return
+    } else {
+      setErrorCreate(false);
     }
     return editableQuestion ? onEdit(question) : onCreate(question);
+
   };
+
 
   const onCancel = () => {
     if (editableQuestion) setEditableQuestion(null);
@@ -61,21 +73,19 @@ const AdminPage = () => {
   const onQuestionEdit = (record) => {
     if (create) setCreate(false);
     setEditableQuestion(record);
+ if(editableQuestion) setEditableQuestion(null)
   };
 
   useEffect(() => {
     const existingValue = localStorage.getItem("questions");
     if (existingValue) {
       const q = JSON.parse(existingValue);
-      debugger;
       if (JSON.stringify(q) !== JSON.stringify(questions)) {
         setQuestions(questions);
         localStorage.setItem("questions", JSON.stringify(questions));
-        debugger;
       }
     } else {
       localStorage.setItem("questions", JSON.stringify(questions));
-      debugger;
     }
   }, [questions]);
 
@@ -97,6 +107,8 @@ const AdminPage = () => {
             <QuestionForm
               onSubmit={onSubmit}
               onCancel={onCancel}
+              create={create}
+              setEditableQuestion={setEditableQuestion}
               currentQuestion={editableQuestion}
             />
           )}
@@ -104,7 +116,7 @@ const AdminPage = () => {
             <QuestionForm
               onSubmit={onSubmit}
               onCancel={onCancel}
-              error={error}
+              errorCreate={errorCreate}
             />
           )}
         </div>

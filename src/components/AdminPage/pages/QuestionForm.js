@@ -4,7 +4,7 @@ import { FormOutlined } from "@ant-design/icons";
 import Choices from "./Choices";
 import "../styles/AddQuestionForm.css";
 
-const QuestionForm = ({ error, onSubmit, onCancel, currentQuestion }) => {
+const QuestionForm = ({ errorCreate, onSubmit, onCancel, currentQuestion , create, setEditableQuestion }) => {
 
   const [question, setQuestion] = useState(() => {
     const initialState = { title: "", answer: "", choices: [], id: 0 };
@@ -19,18 +19,24 @@ const QuestionForm = ({ error, onSubmit, onCancel, currentQuestion }) => {
     return initialState;
   });
 
+const [errorEditing , setErrorEditing] = useState('');
+const [error, setError] = useState('');
+
   const onAnswerChange = (key) => {
     setQuestion({
       ...question,
-      answer: key
+      answer: key,
     });
+    setErrorEditing('')
   };
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     const answerChoice = question.choices.find(choice => choice.key === question.answer);
 
-    if(!answerChoice)
-     onAnswerChange(null)
+   if(!answerChoice){
+      onAnswerChange(null);
+      setErrorEditing('Select an answer !!');
+    }
 
   },[question.choices]);
 
@@ -38,8 +44,7 @@ const QuestionForm = ({ error, onSubmit, onCancel, currentQuestion }) => {
   const onChoiceDelete = (choice) => {
     setQuestion((question) => {
       const filterChoices = question.choices.filter(
-        (x) => x.key !== choice.key
-      );
+        (x) => x.key !== choice.key);
       return {
         ...question,
         choices: filterChoices,
@@ -76,9 +81,7 @@ const QuestionForm = ({ error, onSubmit, onCancel, currentQuestion }) => {
   const onChoiceChange = (attr, value, index) => {
     setQuestion((previousQuestion) => {
 
-      const newChoices = [
-          ...previousQuestion.choices
-      ];
+      const newChoices = [ ...previousQuestion.choices ];
 
       const currentChoice = newChoices[index];
 
@@ -93,11 +96,16 @@ const QuestionForm = ({ error, onSubmit, onCancel, currentQuestion }) => {
 
   const handleSave = () => {
     onSubmit(question);
+    if(errorEditing !== '') return;
+    if(question.title === '') {
+      setError('Please fill the name !!');
+      return;
+    }else setError('');
+    setEditableQuestion(null);
+    setQuestion({ title: "", answer: "", choices: [], id: 0 })
   };
 
   const { Option } = Select;
-
-
 
   return (
     <div className="form-container">
@@ -115,6 +123,9 @@ const QuestionForm = ({ error, onSubmit, onCancel, currentQuestion }) => {
             addonBefore={<FormOutlined />}
             style={{ width: 500 }}
           />
+          <p style={{ color: "red", paddingTop: "10px", marginRight: "20px" }}>
+            {error}
+          </p>
           <label>Correct Answer</label>
 
           <Select
@@ -136,6 +147,9 @@ const QuestionForm = ({ error, onSubmit, onCancel, currentQuestion }) => {
               );
             })}
           </Select>
+          <p style={{ color: "red", paddingTop: "10px", marginRight: "20px" }}>
+            {errorEditing}
+          </p>
           <Choices
             list={question.choices}
             createChoice={createChoice}
@@ -145,11 +159,9 @@ const QuestionForm = ({ error, onSubmit, onCancel, currentQuestion }) => {
         </Space>
       </form>
       <div className="new-input-buttons">
-        {error && (
-          <p style={{ color: "red", paddingTop: "10px", marginRight: "20px" }}>
-            Please fill the fields !!
-          </p>
-        )}
+        <p style={{ color: "red", paddingTop: "10px", marginRight: "20px" }}>
+        {errorCreate}
+        </p>
         <Button shape="round" type="primary" onClick={handleSave}>
           SAVE
         </Button>
