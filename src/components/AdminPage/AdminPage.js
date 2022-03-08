@@ -43,15 +43,12 @@ const AdminPage = () => {
     debugger;
     if (!question.title && !question.answer) {
       setError(true);
-      debugger;
       return;
     }
-    debugger;
     return editableQuestion ? onEdit(question) : onCreate(question);
   };
 
   const onCancel = () => {
-    debugger;
     if (editableQuestion) setEditableQuestion(null);
     else setCreate(null);
   };
@@ -67,7 +64,6 @@ const AdminPage = () => {
   };
 
   const onQuestionEdit = (record) => {
-    debugger;
     if (create) setCreate(false);
     setEditableQuestion(record);
   };

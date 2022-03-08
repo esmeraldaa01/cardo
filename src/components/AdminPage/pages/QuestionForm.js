@@ -9,7 +9,6 @@ const QuestionForm = ({
   onSubmit,
   onCancel,
   currentQuestion,
-  create,
   setEditableQuestion,
 }) => {
   const [question, setQuestion] = useState(() => {
@@ -188,9 +187,9 @@ const QuestionForm = ({
           {errorCreate?.title}
           {errorCreate?.answer}
           {errorCreate?.choices}
-          {errorEditing?.answer}
-          {errorEditing?.title}
-          {errorEditing?.choices}
+          {currentQuestion && errorEditing?.answer}
+          {currentQuestion && errorEditing?.title}
+          {currentQuestion && errorEditing?.choices}
         </p>
         <Button shape="round" type="primary" onClick={handleSave}>
           SAVE

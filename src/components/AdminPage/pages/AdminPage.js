@@ -45,23 +45,22 @@ const AdminPage = () => {
 
   const onSubmit = (question) => {
     if (!question.title) {
-      setErrorCreate({ ...errorCreate, title: "Please fill the namee c!" });
+      setErrorCreate({ ...errorCreate, title: "Please fill the name c!" });
       return;
-    } else if (question.choices.length < 2) {
+    } else setErrorCreate({...errorCreate, title: null});
+      if (question.choices.length < 2) {
       setErrorCreate({ ...errorCreate, choices: "At least 2 options c!" });
       return;
-    } else if (checkChoices(question.choices)) {
+    } else  setErrorCreate({ title: null, answer: null , choices : []});
+      if (checkChoices(question.choices)) {
       setErrorCreate({ ...errorCreate, choices: "Fill the options c!" });
       return;
-    } else if (!question.answer) {
+    } else  setErrorCreate({ title: null, answer: null , choices : []})
+      if (!question.answer) {
       setErrorCreate({ ...errorCreate, answer: "Please fill the answer c!!" });
       return;
-    } else {
-      setErrorCreate({
-        title: null,
-        answer: null,
-      });
-    }
+    } else  setErrorCreate({ title: null, answer: null , choices : []})
+
     return editableQuestion ? onEdit(question) : onCreate(question);
   };
 
