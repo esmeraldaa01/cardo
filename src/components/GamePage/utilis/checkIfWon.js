@@ -1,5 +1,4 @@
 
-
 const SCORE_MAP = {
     easy: 3,
     medium: 5,

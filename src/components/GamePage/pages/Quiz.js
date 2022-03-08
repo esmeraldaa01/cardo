@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addScore } from "../redux/action";
-import questions from "../../../questions";
 import '../styles/quiz.css'
 import { IoCloseCircle } from "react-icons/io5";
 import Layout from '../layout/layout';
@@ -14,9 +13,17 @@ const Quiz = () => {
   const [chances, setChances] = useState(0);
   const [showColoredAnswers, setColoredAnswers] = useState(false);
   const [selected, setSelected] = useState();
-
+const [questions , setQuestions] = useState([{id: null , title: null , answer : null , choices : []}]);
   let navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const question = localStorage.getItem('questions');
+    const questionsAre = JSON.parse(question);
+    setQuestions(questionsAre)
+console.log('quest e', questionsAre)
+  }, [])
+
 
   const handleClick = (choice) => {
     setSelected(choice.key);
@@ -55,50 +62,51 @@ const Quiz = () => {
     }
   };
 
+  console.log('quest', questions)
   return (
-    <Layout>
-    <div className="quiz-container">
-      <div className="quiz">
-        <p className="question">{questions[questionIndex].title}</p>
-        <div>
-          <div className="answers">
-            {questions[questionIndex].choices.map((choice) => {
-              const correctAnswer =
-                questions[questionIndex].answer === selected;
+      <Layout>
+        <div className="quiz-container">
+          <div className="quiz">
+            <p className="question">{questions[questionIndex]?.title}</p>
+            <div>
+              <div className="answers">
+                {questions[questionIndex]?.choices.map((choice) => {
+                  const correctAnswer =
+                      questions[questionIndex].answer === selected;
 
-              const isSelected = selected === choice.key;
+                  const isSelected = selected === choice.key;
 
-              const correct = correctAnswer && isSelected;
+                  const correct = correctAnswer && isSelected;
 
-              let classes;
-              if (isSelected && !correct && showColoredAnswers)
-                classes = "wrong-answer";
-              else classes = "answer-btn";
+                  let classes;
+                  if (isSelected && !correct && showColoredAnswers)
+                    classes = "wrong-answer";
+                  else classes = "answer-btn";
 
-              return (
-                <button
-                  key={choice.key}
-                  className={classes}
-                  onClick={() =>
-                    handleClick(choice, questions[questionIndex].answer)
-                  }
-                >
-                  <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
-                  >
-                    {choice.key.toUpperCase() + "."} {choice.title}
-                    {isSelected && !correct && showColoredAnswers && (
-                      <IoCloseCircle />
-                    )}
-                  </div>
-                </button>
-              );
-            })}
+                  return (
+                      <button
+                          key={choice.key}
+                          className={classes}
+                          onClick={() =>
+                              handleClick(choice, questions[questionIndex].answer)
+                          }
+                      >
+                        <div
+                            style={{ display: "flex", justifyContent: "space-between" }}
+                        >
+                          {choice.key.toUpperCase() + "."} {choice.title}
+                          {isSelected && !correct && showColoredAnswers && (
+                              <IoCloseCircle />
+                          )}
+                        </div>
+                      </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    </Layout> )
+      </Layout> )
 }
 
 export default Quiz;

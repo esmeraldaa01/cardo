@@ -44,7 +44,7 @@ const AdminPage = () => {
   };
 
   const onSubmit = (question) => {
-    if (!question.title) {
+    if(!question.title) {
       setErrorCreate({ ...errorCreate, title: "Please fill the name c!" });
       return;
     } else setErrorCreate({...errorCreate, title: null});

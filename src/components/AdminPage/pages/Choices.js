@@ -38,7 +38,7 @@ const Choices = ({list, handleDelete, createChoice, onChoiceChange}) => {
                                 />
                             </Col>
                             <Col>
-                                <Button danger={true} onClick={() => handleDelete(choice)}>
+                                <Button style={{marginTop : "35px"}} danger={true} onClick={() => handleDelete(choice)}>
                                     Delete
                                 </Button>
                             </Col>
