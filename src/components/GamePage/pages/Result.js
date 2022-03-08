@@ -13,11 +13,22 @@ const Result = () => {
   const level = useSelector((state) => state.level);
   const score = useSelector((state) => state.score);
   const [winConfetti, setWinConfetti] = useState(true);
-  const [gamRules , setGameRules] = useState({ [null] : {
+  const [gamRules , setGameRules] = useState({ 'easy' : {
           timeout : null,
           wrongAnswers : null ,
           slices : null
-      } });
+      },
+      'medium' : {
+          timeout : null,
+          wrongAnswers : null ,
+          slices : null
+      },
+      'hard' : {
+          timeout : null,
+          wrongAnswers : null ,
+          slices : null
+      }
+  });
 
   const style = { color: "rgba(212,175,55, 0.8)", marginTop: "20px" };
 
@@ -32,6 +43,14 @@ const Result = () => {
     };
   }, []);
 
+    const getFromCache = (key) => {
+        if(!localStorage.hasOwnProperty(key))
+            return null
+
+        const items = localStorage.getItem(key);
+        return  JSON.parse(items);
+    }
+
     useEffect(() => {
         const gameRules = localStorage.getItem('gameRules');
         const rules = JSON.parse(gameRules);
@@ -42,8 +61,10 @@ const Result = () => {
     const checkIfWon = () => {
         return gamRules[level].wrongAnswers < score
     }
-    debugger
-    console.log(gamRules, 'game')
+debugger
+    console.log(gamRules, 'gamee')
+
+
   return checkIfWon ?
    ( 
      <Layout>

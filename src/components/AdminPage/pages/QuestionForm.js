@@ -120,7 +120,8 @@ const QuestionForm = ({
     }else if (question.answer === null){
       setErrorEditing({ ...errorEditing, answer: "Select an answer !" });
       return
-    }else if (question.choices.length < 2){
+    }else setErrorEditing({ answer: null})
+      if (question.choices.length < 2){
       setErrorEditing({ ...errorEditing, choices: "At least 2 options !" });
       return
     }else if (checkChoices(question.choices)) {

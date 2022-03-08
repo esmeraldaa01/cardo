@@ -49,15 +49,15 @@ const AdminPage = () => {
       return;
     } else setErrorCreate({...errorCreate, title: null});
       if (question.choices.length < 2) {
-      setErrorCreate({ ...errorCreate, choices: "At least 2 options c!" });
+      setErrorCreate({  choices: "At least 2 options c!" });
       return;
     } else  setErrorCreate({ title: null, answer: null , choices : []});
       if (checkChoices(question.choices)) {
-      setErrorCreate({ ...errorCreate, choices: "Fill the options c!" });
+      setErrorCreate({ choices: "Fill the options c!" });
       return;
     } else  setErrorCreate({ title: null, answer: null , choices : []})
       if (!question.answer) {
-      setErrorCreate({ ...errorCreate, answer: "Please fill the answer c!!" });
+      setErrorCreate({  answer: "Please fill the answer c!!" });
       return;
     } else  setErrorCreate({ title: null, answer: null , choices : []})
 

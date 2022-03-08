@@ -41,7 +41,7 @@
     flex-direction: column;
     margin: 0 10px;
     padding-bottom: 80px;
-    height: 300px;
+    height: 350px;
     display: flex;
     flex: 1;
   }
@@ -57,7 +57,7 @@
   flex-direction: column;
   margin: 0 10px;
   padding-bottom: 80px;
-    height: 300px;
+    height: 350px;
     flex: 1;
   }
   .style {
@@ -97,7 +97,7 @@
     color: aliceblue;
     background-color: rgba(2, 2, 63, 0.7);
     padding: 8px;
-    margin: 69px 10px 10px 10px;
+    margin: 20px 10px 10px 10px;
     text-transform: uppercase;
     border-radius: 5px;
     align-items: center;

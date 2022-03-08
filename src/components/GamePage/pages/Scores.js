@@ -8,7 +8,6 @@ const Scores = ({ score }) => {
 
   return (
     <div className="scores">
-      {/*{checkIfWon(score) && <IoTrophySharp style={style} />}*/}
       Score: {score.score} , level: {score.level} ,{" "}
       {moment(score.timestamp).format("LT")}
     </div>
