@@ -4,15 +4,23 @@ import { useSelector } from "react-redux";
 import questions from "../../../questions";
 import Confetti from "react-confetti";
 import { IoTrophySharp } from "react-icons/io5";
-import { checkIfWon } from "../utilis/checkIfWon";
 import "../styles/result.css";
 import Layout from '../layout/layout';
+
 
 const Result = () => {
   let navigate = useNavigate();
   const level = useSelector((state) => state.level);
   const score = useSelector((state) => state.score);
   const [winConfetti, setWinConfetti] = useState(true);
+  const [gamRules , setGameRules] = useState({ [null] : {
+          timeout : null,
+          wrongAnswers : null ,
+          slices : null
+      } });
+
+  const style = { color: "rgba(212,175,55, 0.8)", marginTop: "20px" };
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -24,10 +32,19 @@ const Result = () => {
     };
   }, []);
 
-  const style = { color: "rgba(212,175,55, 0.8)", marginTop: "20px" };
-  const won = checkIfWon({ level, score: score });
+    useEffect(() => {
+        const gameRules = localStorage.getItem('gameRules');
+        const rules = JSON.parse(gameRules);
+        setGameRules(rules);
+    }, [])
 
-  return won ?
+
+    const checkIfWon = () => {
+        return gamRules[level].wrongAnswers < score
+    }
+    debugger
+    console.log(gamRules, 'game')
+  return checkIfWon ?
    ( 
      <Layout>
    <div className="result">

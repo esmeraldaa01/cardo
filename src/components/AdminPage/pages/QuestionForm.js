@@ -183,7 +183,7 @@ const QuestionForm = ({
         </Space>
       </form>
       <div className="new-input-buttons">
-        <p style={{ color: "red", paddingTop: "10px", marginRight: "20px" }}>
+        <p style={{ color: "red", paddingTop: "10px", marginRight: "20px", fontSize: '16px ', fontWeight:'500' }}>
           {errorCreate?.title}
           {errorCreate?.answer}
           {errorCreate?.choices}

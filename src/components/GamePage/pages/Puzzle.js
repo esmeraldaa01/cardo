@@ -12,23 +12,39 @@ const Puzzle = () => {
   const [style, setStyle] = useState();
   const level = useSelector((state) => state.level);
   let navigate = useNavigate();
+  // const [gamRules , setGameRules] = useState();
+
 
   useEffect(() => {
+
+    const gameRules = localStorage.getItem('gameRules');
+    const rules = JSON.parse(gameRules);
+    console.log(rules, 'game');
+
     if (!level) return;
+    //
+    // let numberSlices = 0;
+    // let timer = 500;
+    //
+    // if (level === "easy") {
+    //   numberSlices = 2;
+    //   timer = timer + 2000;
+    // }
+    // if (level === "medium") {
+    //   numberSlices = 30;
+    //   timer = timer + 1000;
+    // }
+    // if (level === "hard") numberSlices = 4;
 
-    let numberSlices = 0;
-    let timer = 500;
+   let numberSlices =  rules[level].slices ;
+   console.log(numberSlices, 'hi')
+   let timer = rules[level].timer;
+   if(level === "easy"){
+     timer = timer + 8000;
+   }else if(level === "medium"){
+     timer = timer + 7000;
+   }
 
-    if (level === "easy") {
-      numberSlices = 2;
-      timer = timer + 2000;
-    }
-    if (level === "medium") {
-      numberSlices = 30;
-      timer = timer + 1000;
-    }
-
-    if (level === "hard") numberSlices = 4;
 
     const doCalculation = () => {
       setCount((count) => {
