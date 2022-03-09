@@ -30,6 +30,7 @@ const Result = () => {
       }
   });
 
+
   const style = { color: "rgba(212,175,55, 0.8)", marginTop: "20px" };
 
 
@@ -43,13 +44,6 @@ const Result = () => {
     };
   }, []);
 
-    const getFromCache = (key) => {
-        if(!localStorage.hasOwnProperty(key))
-            return null
-
-        const items = localStorage.getItem(key);
-        return  JSON.parse(items);
-    }
 
     useEffect(() => {
         const gameRules = localStorage.getItem('gameRules');
@@ -59,13 +53,14 @@ const Result = () => {
 
 
     const checkIfWon = () => {
-        return gamRules[level].wrongAnswers < score
+        let index = 0;
+        if(level === "medium") index = 0 + 1;
+        if(level === "hard") index = 0 + 2;
+        let entries = Object.values(gamRules)
+        return (entries[index].wrongAnswers < score)
     }
-debugger
-    console.log(gamRules, 'gamee')
 
-
-  return checkIfWon ?
+  return checkIfWon() ?
    ( 
      <Layout>
    <div className="result">

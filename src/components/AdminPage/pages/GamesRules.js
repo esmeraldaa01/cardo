@@ -6,17 +6,17 @@ const GameRules = () => {
   const [level, setLevel] = useState("easy");
   const [levelsData, setLevelsData] = useState({
     easy: {
-      timeout: "9000 sec",
+      timeout: 9000,
       slices: 2,
       wrongAnswers: 5,
     },
     medium: {
-      timeout: "8000 sec",
+      timeout: 8000,
       slices: 3,
       wrongAnswers: 3,
     },
     hard: {
-      timeout: "7000 sec",
+      timeout: 7000,
       slices: 4,
       wrongAnswers: 1,
     },

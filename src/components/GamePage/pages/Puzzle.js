@@ -12,7 +12,7 @@ const Puzzle = () => {
   const [style, setStyle] = useState();
   const level = useSelector((state) => state.level);
   let navigate = useNavigate();
-  // const [gamRules , setGameRules] = useState();
+
 
 
   useEffect(() => {
@@ -22,30 +22,17 @@ const Puzzle = () => {
     console.log(rules, 'game');
 
     if (!level) return;
-    //
-    // let numberSlices = 0;
-    // let timer = 500;
-    //
-    // if (level === "easy") {
-    //   numberSlices = 2;
-    //   timer = timer + 2000;
-    // }
-    // if (level === "medium") {
-    //   numberSlices = 30;
-    //   timer = timer + 1000;
-    // }
-    // if (level === "hard") numberSlices = 4;
 
    let numberSlices =  rules[level].slices ;
-   console.log(numberSlices, 'hi')
-   let timer = rules[level].timer;
-   if(level === "easy"){
-     timer = timer + 8000;
-   }else if(level === "medium"){
-     timer = timer + 7000;
-   }
+   let timerIs = 0;
+   if(level === "easy") timerIs = rules[level].timeout
+   console.log(rules[level].timeout, 'timeout')
+   if(level === "medium") timerIs = rules[level].timeout
 
+   if(level === "hard")  timerIs = rules[level].timeout
+debugger
 
+    console.log(timerIs , 'timer is')
     const doCalculation = () => {
       setCount((count) => {
         const isVertical = count >= numberSlices && count <= numberSlices * 2;
@@ -78,7 +65,7 @@ const Puzzle = () => {
 
     const interval = setInterval(() => {
       doCalculation();
-    }, timer);
+    }, timerIs);
 
     return () => clearInterval(interval);
   }, []);

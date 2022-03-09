@@ -44,20 +44,26 @@ const AdminPage = () => {
   };
 
   const onSubmit = (question) => {
+    if(!question.title && !question.answer) {
+      setErrorCreate({ title: "Please fill the name!   ",
+        answer: "Please select an answer ! ",
+        choices:"Insert at least 2 choices !  Please Fill options!    "  });
+      return;
+    } else setErrorCreate({ title: null, answer: null , choices: null});
     if(!question.title) {
-      setErrorCreate({...errorCreate, title: "Please fill the name c!" });
+      setErrorCreate({...errorCreate, title: "Please fill the name!  " });
       return;
     } else setErrorCreate({...errorCreate, title: null});
       if (question.choices.length < 2) {
-      setErrorCreate({  choices: "At least 2 options c!" });
+      setErrorCreate({  choices: "Insert at least 2 options!  " });
       return;
     } else  setErrorCreate({ title: null, answer: null , choices : []});
       if (checkChoices(question.choices)) {
-      setErrorCreate({ choices: "Fill the options c!" });
+      setErrorCreate({ choices: "Please fill the options!  " });
       return;
     } else  setErrorCreate({ title: null, answer: null , choices : []})
       if (!question.answer) {
-      setErrorCreate({  answer: "Please fill the answer c!!" });
+      setErrorCreate({  answer: "Please fill the answer!   " });
       return;
     } else  setErrorCreate({ title: null, answer: null , choices : []})
 
