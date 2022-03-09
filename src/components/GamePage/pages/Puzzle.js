@@ -19,20 +19,16 @@ const Puzzle = () => {
 
     const gameRules = localStorage.getItem('gameRules');
     const rules = JSON.parse(gameRules);
-    console.log(rules, 'game');
 
     if (!level) return;
 
    let numberSlices =  rules[level].slices ;
    let timerIs = 0;
    if(level === "easy") timerIs = rules[level].timeout
-   console.log(rules[level].timeout, 'timeout')
    if(level === "medium") timerIs = rules[level].timeout
-
    if(level === "hard")  timerIs = rules[level].timeout
-debugger
 
-    console.log(timerIs , 'timer is')
+
     const doCalculation = () => {
       setCount((count) => {
         const isVertical = count >= numberSlices && count <= numberSlices * 2;

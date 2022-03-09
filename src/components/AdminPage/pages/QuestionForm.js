@@ -11,6 +11,7 @@ const QuestionForm = ({
   currentQuestion,
   setEditableQuestion,
 }) => {
+
   const [question, setQuestion] = useState(() => {
     const initialState = { title: "", answer: "", choices: [], id: 0 };
 
@@ -29,7 +30,7 @@ const QuestionForm = ({
     answer: null,
     choices : []
   });
-  console.log(errorEditing);
+
 
   const onAnswerChange = (key) => {
     setQuestion({
@@ -48,10 +49,11 @@ const QuestionForm = ({
     }
   }, [question.choices]);
 
+
   const onChoiceDelete = (choice) => {
     setQuestion((question) => {
       const filterChoices = question.choices.filter(
-        (x) => x.key !== choice.key
+        (chosenChoice) => chosenChoice.key !== choice.key
       );
       return {
         ...question,
@@ -114,24 +116,34 @@ const QuestionForm = ({
 
   const handleSave = () => {
     onSubmit(question);
-    if (question.title === "") {
-      setErrorEditing({ ...errorEditing, title: "Please fill the title !" });
+    if(!question.title && !question.answer && question.choices.length <= 2 && (!checkChoices(question.choices)) ){
+      setErrorEditing({title: "Question Title is required!", answer: "Question Answer is required!", choices: "Insert at least two choices and choose an answer."})
       return;
-    }else if (question.answer === null){
-      setErrorEditing({ ...errorEditing, answer: "Select an answer !" });
-      return
-    }else setErrorEditing({ answer: null})
-      if (question.choices.length < 2){
-      setErrorEditing({ ...errorEditing, choices: "At least 2 options !" });
-      return
+    }else if(!question.title && !question.answer){
+      setErrorEditing({title: "Question Title is required!", answer: "Question Answer is required!"})
+      return;
+    } else if(question.title && !question.answer){
+      setErrorEditing({title: "Answer Title is required! Please choose an answer."})
+      return;
+    }else if(!question || !question.answer && question.choices.length < 2) {
+      setErrorEditing({ choices: "Insert at least two choices and choose an answer." });
+      return;
+    }else if(!question.answer && question.choices.length >= 2 && (!checkChoices(question.choices)))  {
+      setErrorEditing({title: "Question Answer is required! Choose an answer."})
+      return;
     }else if (checkChoices(question.choices)) {
-      setErrorEditing({ ...errorEditing, choices: "Fill the options" });
+      setErrorEditing({ choices: "Choice Title and Choice Key are required. Please fill the options!" });
       return;
-    } 
-    else setErrorEditing({ title: null, answer: null });
+    }else if (!question.title && question.answer && question.choices.length !== 0) {
+      setErrorEditing({ title: "Question Title is required! Please write a question title." });
+      return;
+    }
+    else setErrorEditing({title: null, answer: null , choices : []});
+
     setEditableQuestion(null);
     setQuestion({ title: "", answer: "", choices: [], id: 0 });
   };
+
 
   const { Option } = Select;
 

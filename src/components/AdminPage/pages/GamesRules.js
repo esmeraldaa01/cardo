@@ -6,21 +6,22 @@ const GameRules = () => {
   const [level, setLevel] = useState("easy");
   const [levelsData, setLevelsData] = useState({
     easy: {
-      timeout: 9000,
+      timeout: 4000,
       slices: 2,
       wrongAnswers: 5,
     },
     medium: {
-      timeout: 8000,
+      timeout: 3000,
       slices: 3,
       wrongAnswers: 3,
     },
     hard: {
-      timeout: 7000,
+      timeout: 2000,
       slices: 4,
       wrongAnswers: 1,
     },
   });
+
 
   const handleRadioGroupChange = (event) => {
     setLevel(event.target.value);
@@ -36,13 +37,14 @@ const GameRules = () => {
 
     setLevelsData(newForm);
   };
-
+debugger
   const handleSubmit = (level) => {
     const newlevel = {
       timeout: levelsData.timeout,
       slices: levelsData.slices,
       wrongAnswers: levelsData.wrongAnswers,
     }
+
     (Object.keys(levelsData).map((x) => {
         if (x === level) {
           setLevelsData({ ...levelsData, [x]: { newlevel } });

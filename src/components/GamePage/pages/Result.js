@@ -13,7 +13,9 @@ const Result = () => {
   const level = useSelector((state) => state.level);
   const score = useSelector((state) => state.score);
   const [winConfetti, setWinConfetti] = useState(true);
-  const [gamRules , setGameRules] = useState({ 'easy' : {
+  const style = { color: "rgba(212,175,55, 0.8)", marginTop: "20px" };
+  const [gamRules , setGameRules] = useState({
+      'easy' : {
           timeout : null,
           wrongAnswers : null ,
           slices : null
@@ -29,9 +31,6 @@ const Result = () => {
           slices : null
       }
   });
-
-
-  const style = { color: "rgba(212,175,55, 0.8)", marginTop: "20px" };
 
 
   useEffect(() => {
@@ -58,6 +57,7 @@ const Result = () => {
         if(level === "hard") index = 0 + 2;
         let entries = Object.values(gamRules)
         return (entries[index].wrongAnswers < score)
+        //gamRules[level].wrongAnswers
     }
 
   return checkIfWon() ?

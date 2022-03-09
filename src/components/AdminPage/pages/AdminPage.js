@@ -24,6 +24,7 @@ const AdminPage = () => {
       newQuestions[index] = question;
       return newQuestions;
     });
+    setEditableQuestion(null);
   };
 
   const onCreate = (question) => {
@@ -31,6 +32,7 @@ const AdminPage = () => {
     setQuestions((previousQuestions) => {
       return [...previousQuestions, newQuestion];
     });
+    setCreate(false);
   };
 
   const checkChoices = (choices) => {
@@ -45,25 +47,34 @@ const AdminPage = () => {
 
   const onSubmit = (question) => {
     if(!question.title && !question.answer) {
-      setErrorCreate({ title: "Please fill the name!   ",
+      setErrorCreate({
+        title: "Please fill the name!  ",
         answer: "Please select an answer ! ",
-        choices:"Insert at least 2 choices !  Please Fill options!    "  });
+        choices:"Insert at least 2 choices !  Please Fill options! "  });
       return;
     } else setErrorCreate({ title: null, answer: null , choices: null});
     if(!question.title) {
-      setErrorCreate({...errorCreate, title: "Please fill the name!  " });
+      setErrorCreate({
+        ...errorCreate ,
+        title: "Please fill the name! " });
       return;
     } else setErrorCreate({...errorCreate, title: null});
       if (question.choices.length < 2) {
-      setErrorCreate({  choices: "Insert at least 2 options!  " });
+      setErrorCreate({
+        choices: "Insert at least 2 options! "
+      });
       return;
     } else  setErrorCreate({ title: null, answer: null , choices : []});
       if (checkChoices(question.choices)) {
-      setErrorCreate({ choices: "Please fill the options!  " });
+      setErrorCreate({
+        choices: "Please fill the options! "
+      });
       return;
     } else  setErrorCreate({ title: null, answer: null , choices : []})
       if (!question.answer) {
-      setErrorCreate({  answer: "Please fill the answer!   " });
+      setErrorCreate({
+        answer: "Please fill the answer! "
+      });
       return;
     } else  setErrorCreate({ title: null, answer: null , choices : []})
 
@@ -93,8 +104,8 @@ const AdminPage = () => {
   useEffect(() => {
     const existingValue = localStorage.getItem("questions");
     if (existingValue) {
-      const q = JSON.parse(existingValue);
-      if (JSON.stringify(q) !== JSON.stringify(questions)) {
+      const existingQuestions = JSON.parse(existingValue);
+      if (JSON.stringify(existingQuestions) !== JSON.stringify(questions)) {
         setQuestions(questions);
         localStorage.setItem("questions", JSON.stringify(questions));
       }
