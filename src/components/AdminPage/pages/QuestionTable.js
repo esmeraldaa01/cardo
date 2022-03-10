@@ -1,8 +1,7 @@
 import '../styles/QuestionTable.css';
-
 import {Button} from "antd";
 
-const QuestionsTable = ({ questions , onDelete, onEdit, onCreate}) => {
+const QuestionsTable = ({questions, onDelete, onEdit, onCreate}) => {
     return (
         <div className="table-container">
             <p className="header-admin">Quiz Questions CRUD</p>

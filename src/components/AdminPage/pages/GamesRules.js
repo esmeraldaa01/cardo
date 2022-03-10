@@ -37,7 +37,7 @@ const GameRules = () => {
 
     setLevelsData(newForm);
   };
-debugger
+
   const handleSubmit = (level) => {
     const newlevel = {
       timeout: levelsData.timeout,

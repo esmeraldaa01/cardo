@@ -9,7 +9,6 @@ const QuestionForm = ({
   onSubmit,
   onCancel,
   currentQuestion,
-  setEditableQuestion,
 }) => {
 
   const [question, setQuestion] = useState(() => {
@@ -116,31 +115,59 @@ const QuestionForm = ({
 
   const handleSave = () => {
     onSubmit(question);
-    if(!question.title && !question.answer && question.choices.length <= 2 && (!checkChoices(question.choices)) ){
-      setErrorEditing({title: "Question Title is required!", answer: "Question Answer is required!", choices: "Insert at least two choices and choose an answer."})
+    if(!question.title && !question.answer && question.choices.length <= 2){
+      setErrorEditing({
+        title: "Question Title is required!",
+        answer: "Question Answer is required!",
+        choices: "Insert at least two choices and choose an answer."})
       return;
-    }else if(!question.title && !question.answer){
-      setErrorEditing({title: "Question Title is required!", answer: "Question Answer is required!"})
+    } else if(!question.title && !question.answer && (checkChoices(question.choices))){
+      setErrorEditing({
+        title: "Question Title is required!",
+        answer: "Question Answer is required!",
+      choices : "Fill options !"
+      })
+      return;
+    }else if(!question.title && !question.answer && (checkChoices(question.choices))){
+      setErrorEditing({
+        title: "Question Title is required!",
+        answer: "Question Answer is required!",
+        choices : "Fill options !"
+      })
+      return;
+    } else if(!question.answer && checkChoices(question.choices)){
+      setErrorEditing({
+        choices: "Please fill the options !",
+        answer: "Question Answer is required!"})
       return;
     } else if(question.title && !question.answer){
-      setErrorEditing({title: "Answer Title is required! Please choose an answer."})
+      setErrorEditing({
+        title: "Answer Title is required! Please choose an answer."
+      })
       return;
     }else if(!question || !question.answer && question.choices.length < 2) {
-      setErrorEditing({ choices: "Insert at least two choices and choose an answer." });
+      setErrorEditing({
+        choices: "Insert at least two choices and choose an answer."
+      });
       return;
     }else if(!question.answer && question.choices.length >= 2 && (!checkChoices(question.choices)))  {
-      setErrorEditing({title: "Question Answer is required! Choose an answer."})
+      setErrorEditing({
+        title: "Question Answer is required! Choose an answer."
+      })
       return;
     }else if (checkChoices(question.choices)) {
-      setErrorEditing({ choices: "Choice Title and Choice Key are required. Please fill the options!" });
+      setErrorEditing({
+        choices: "Choice Title and Choice Key are required. Please fill the options!"
+      });
       return;
     }else if (!question.title && question.answer && question.choices.length !== 0) {
-      setErrorEditing({ title: "Question Title is required! Please write a question title." });
+      setErrorEditing({
+        title: "Question Title is required! Please write a question title."
+      });
       return;
     }
     else setErrorEditing({title: null, answer: null , choices : []});
 
-    setEditableQuestion(null);
     setQuestion({ title: "", answer: "", choices: [], id: 0 });
   };
 
@@ -193,13 +220,13 @@ const QuestionForm = ({
         </Space>
       </form>
       <div className="new-input-buttons">
-        <p style={{ color: "red", paddingTop: "10px", marginRight: "20px", fontSize: '16px ', fontWeight:'500' }}>
-          {errorCreate?.title}
-          {errorCreate?.answer}
-          {errorCreate?.choices}
-          {currentQuestion && errorEditing?.answer}
-          {currentQuestion && errorEditing?.title}
-          {currentQuestion && errorEditing?.choices}
+        <p style={{ color: "red",gap: '0px',fontSize: '16px ', fontWeight:'500' , display:'flex', flexDirection:'column'}}>
+          <p>{errorCreate?.title}</p>
+          <p>{errorCreate?.answer}</p>
+          <p>{errorCreate?.choices}</p>
+          <p>{currentQuestion && errorEditing?.answer}</p>
+          <p>{currentQuestion && errorEditing?.title}</p>
+          <p>{currentQuestion && errorEditing?.choices}</p>
         </p>
         <Button shape="round" type="primary" onClick={handleSave}>
           SAVE

@@ -32,7 +32,7 @@ const Game = () => {
             <p className="title">Level</p>
 
             <button
-              className={ level || easyDefault === "easy" ? "clicked" : "btn" }
+              className={ level  === "easy" ? "clicked" : "btn" }
               onClick={() => setLevel("easy")}
             >
               Easy
