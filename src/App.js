@@ -10,17 +10,22 @@ import "./components/GamePage/styles/layout.css";
 
 
 const App = () => {
-    const [authorised , setAuthorised] = useState(false)
-    const [authorisedGame , setAuthorisedGame] = useState(false)
+    // const [authorised , setAuthorised] = useState(false)
+    // const [authorisedGame , setAuthorisedGame] = useState(false)
+    const [authorised , setAuthorised] = useState({
+        admin : false ,
+        game : false ,
+    })
+
   return (
       <>
       <Routes>
-        <Route path = "/"  element={<LoginPage setAuthorised={setAuthorised} setAuthorisedGame={setAuthorisedGame} />} />
+        <Route path = "/"  element={<LoginPage setAuthorised={setAuthorised}  />} />
         <Route path= "/admin"   element={ <AdminPage authorized={authorised} />}  />
-            <Route path="/game"  element={ <GamePage authorisedGame={authorisedGame} /> }/>
-            <Route path="/puzzle" element={<Puzzle />} />
-            <Route path="/quiz" element={<Quiz />} />
-            <Route path="/result" element={<Result />} />
+            <Route path="/game"  element={ <GamePage authorised={authorised} /> }/>
+            <Route path="/puzzle" element={<Puzzle authorised={authorised} />} />
+            <Route path="/quiz" element={<Quiz authorised={authorised}/>} />
+            <Route path="/result" element={<Result authorised={authorised} />} />
           </Routes>
       </>
   );

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Layout from '../layout/layout';
 
-const Puzzle = () => {
+const Puzzle = ({authorised}) => {
   const [count, setCount] = useState(0);
   const [width] = useState(800);
   const [height] = useState(524);
@@ -16,7 +16,9 @@ const Puzzle = () => {
 
 
   useEffect(() => {
-
+      if(authorised.game === false){
+          navigate(`/`)
+      }
     const gameRules = localStorage.getItem('gameRules');
     const rules = JSON.parse(gameRules);
 

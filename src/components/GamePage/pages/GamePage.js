@@ -6,7 +6,7 @@ import Scores from "./Scores";
 import '../styles/game.css'
 import Layout from '../layout/layout'
 
-const Game = ({authorisedGame}) => {
+const Game = ({authorised}) => {
   const [scores, setScores] = useState([]);
   const [level, setLevel] = useState();
   const [easyDefault, setEasyDefault] = useState(false);
@@ -15,7 +15,7 @@ const Game = ({authorisedGame}) => {
 
 
   useEffect(() => {
-    if(authorisedGame === false){
+    if(authorised.game === false){
       navigate(`/`)
     }
     const scores = localStorage.getItem("scores");

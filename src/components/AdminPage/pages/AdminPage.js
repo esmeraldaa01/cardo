@@ -27,7 +27,7 @@ const AdminPage = ({ authorized }) => {
     let navigate = useNavigate();
 
     useEffect(() => {
-        if(authorized === false){
+        if(authorized.admin === false){
             navigate(`/`)
         }
     })

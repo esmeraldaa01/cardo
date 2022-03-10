@@ -6,7 +6,7 @@ import { EyeInvisibleOutlined, EyeTwoTone,UserOutlined } from '@ant-design/icons
 import {useNavigate} from "react-router-dom";
 
 
-const LoginPage = ({ setAuthorised , setAuthorisedGame }) => {
+const LoginPage = ({ setAuthorised }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     let navigate = useNavigate();
@@ -14,10 +14,10 @@ const LoginPage = ({ setAuthorised , setAuthorisedGame }) => {
 
     const handleClick = () => {
         if (username.startsWith('admin') && password !== '') {
-            setAuthorised(true);
+            setAuthorised({admin : true});
             navigate(`/admin`)
         }else if (username.startsWith('user') && password !== '') {
-            setAuthorisedGame(true);
+            setAuthorised({game : true});
             navigate(`/game`)
         } else {
             alert('Wrong Credentials! Please enter new credentials.')

@@ -6,7 +6,7 @@ import '../styles/quiz.css'
 import { IoCloseCircle } from "react-icons/io5";
 import Layout from '../layout/layout';
 
-const Quiz = () => {
+const Quiz = ({ authorised }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const score = useSelector((state) => state.score);
   const level = useSelector((state) => state.level);
@@ -18,6 +18,9 @@ const [questions , setQuestions] = useState([{id: null , title: null , answer : 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if(authorised.game === false){
+      navigate(`/`)
+    }
     const question = localStorage.getItem('questions');
     const questionsAre = JSON.parse(question);
     setQuestions(questionsAre)

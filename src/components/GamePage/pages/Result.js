@@ -8,7 +8,7 @@ import "../styles/result.css";
 import Layout from '../layout/layout';
 
 
-const Result = () => {
+const Result = ({authorised}) => {
   let navigate = useNavigate();
   const level = useSelector((state) => state.level);
   const score = useSelector((state) => state.score);
@@ -45,6 +45,9 @@ const Result = () => {
 
 
     useEffect(() => {
+        if(authorised.game === false){
+            navigate(`/`)
+        }
         const gameRules = localStorage.getItem('gameRules');
         const rules = JSON.parse(gameRules);
         setGameRules(rules);
