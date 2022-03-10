@@ -55,9 +55,9 @@ const Result = () => {
         let index = 0;
         if(level === "medium") index = 0 + 1;
         if(level === "hard") index = 0 + 2;
-        let entries = Object.values(gamRules)
-        return (entries[index].wrongAnswers < score)
-        //gamRules[level].wrongAnswers
+        let entries = Object.values(gamRules);
+        return (entries[index].wrongAnswers < score);
+      // return gamRules[level].wrongAnswers
     }
 
   return checkIfWon() ?

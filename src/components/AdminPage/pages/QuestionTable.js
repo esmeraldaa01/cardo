@@ -22,9 +22,7 @@ const QuestionsTable = ({ questions , onDelete, onEdit, onCreate}) => {
                         <td>{question.answer}</td>
                         <td>
                             <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-                                {question.choices.map((choice) => (
-                                    <div>{choice.title} {choice.key}</div>
-                                ))}
+                                {question.choices.map((choice) => (<div>{choice.title} {choice.key}</div>))}
                             </div>
                         </td>
                         <td className="action-buttons">

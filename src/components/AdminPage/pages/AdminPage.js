@@ -90,6 +90,7 @@ const AdminPage = () => {
     setQuestions(questions.filter((question) => question.id !== record.id));
   };
 
+
   const onQuestionCreate = () => {
     if (editableQuestion) setEditableQuestion(null);
     setCreate(true);

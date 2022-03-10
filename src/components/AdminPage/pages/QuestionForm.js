@@ -184,9 +184,6 @@ const QuestionForm = ({
               );
             })}
           </Select>
-          <p
-            style={{ color: "red", paddingTop: "10px", marginRight: "20px" }}
-          ></p>
           <Choices
             list={question.choices}
             createChoice={createChoice}
