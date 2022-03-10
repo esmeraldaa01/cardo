@@ -1,24 +1,30 @@
 import "./LoginPage.css"
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Space, Button, Input} from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone,UserOutlined } from '@ant-design/icons';
 import {useNavigate} from "react-router-dom";
 
-const LoginPage = () => {
+
+const LoginPage = ({ setAuthorised , setAuthorisedGame }) => {
     const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('')
+    const [password, setPassword] = useState('');
     let navigate = useNavigate();
+
 
     const handleClick = () => {
         if (username.startsWith('admin') && password !== '') {
-            navigate(`/admin`);
-        } else if (username.startsWith('user') && password !== '') {
-            navigate(`/game`);
+            setAuthorised(true);
+            navigate(`/admin`)
+        }else if (username.startsWith('user') && password !== '') {
+            setAuthorisedGame(true);
+            navigate(`/game`)
         } else {
             alert('Wrong Credentials! Please enter new credentials.')
         }
+
     }
+
 
     return (
         <div className='form-card'>
@@ -44,8 +50,7 @@ const LoginPage = () => {
                         shape="rectangle"
                         type="primary"
                         htmlType="submit"
-                        onClick={handleClick}
-                >
+                        onClick={handleClick}>
                     Sign in
                 </Button>
             </Space>

@@ -6,14 +6,18 @@ import Scores from "./Scores";
 import '../styles/game.css'
 import Layout from '../layout/layout'
 
-const Game = () => {
+const Game = ({authorisedGame}) => {
   const [scores, setScores] = useState([]);
   const [level, setLevel] = useState();
   const [easyDefault, setEasyDefault] = useState(false);
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
+
   useEffect(() => {
+    if(authorisedGame === false){
+      navigate(`/`)
+    }
     const scores = localStorage.getItem("scores");
     if (scores) {
       setScores(JSON.parse(scores));

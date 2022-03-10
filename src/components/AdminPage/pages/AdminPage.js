@@ -1,15 +1,17 @@
 import "../styles/AdminPage.css";
 import data from "../../../assests/data";
 import QuestionsTable from "./QuestionTable";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import GameRules from "./GamesRules";
 import QuestionForm from "./QuestionForm";
+import {useNavigate} from "react-router-dom";
+
 
 const cloneArray = (list) => {
     return list.map((object) => ({...object}));
 };
 
-const AdminPage = () => {
+const AdminPage = ({ authorized }) => {
     const [create, setCreate] = useState(false);
     const [questions, setQuestions] = useState(()=>{
 
@@ -22,7 +24,15 @@ const AdminPage = () => {
     });
     const [editableQuestion, setEditableQuestion] = useState(null);
     const [errorCreate, setErrorCreate] = useState({title: null, answer: null, choices: []});
+    let navigate = useNavigate();
 
+    useEffect(() => {
+        if(authorized === false){
+            navigate(`/`)
+        }
+    })
+
+    console.log(authorized , 'auth')
     const onEdit = (question) => {
         setQuestions((previousQuestions) => {
             const newQuestions = cloneArray(previousQuestions);
